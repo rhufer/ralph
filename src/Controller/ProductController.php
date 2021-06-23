@@ -26,24 +26,24 @@ class ProductController extends AbstractController
         $this->tvaSelector = $tvaSelector;
     }
 
-    public function show(Request $request, $id): Response
+    public function show(Request $request, Product $product): Response
     {
         $price = 4.5;
         //$product = $this->getDoctrine()->getRepository(Product::class)->findOneBy($id);
         return $this->render('product/show.html.twig', [
-            'slug' => $id,
+            'slug' => $product->id,
             'price' => $price,
             'price'  => $this->calculator->calculTva($price),
             'label_price' => $this->tvaSelector->getTauxTva($price),
             //'product' => $product,
             'controller_name' => 'ProductController',
         ]);
-    
+
     }
 
     public function list(): Response
     {
-        
+
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
         dump($products);
         return $this->render('product/list.html.twig', [
@@ -56,9 +56,9 @@ class ProductController extends AbstractController
     }
 
 
-    public function edit(Request $request){
+    public function edit(Request $request, Product $product){
 
-       $product = $this->getDoctrine()->getRepository(Product::class)->find(92);
+       //$product = $this->getDoctrine()->getRepository(Product::class)->find(92);
 
        //$product = $this->getDoctrine()->getRepository(Product::class)->findOneBy(array('id' => $id));
         $this->denyAccessUnlessGranted('ROLE_MANAGER');
@@ -71,11 +71,11 @@ class ProductController extends AbstractController
 
                     //  $form = $this->createFormBuilder()
                     //  ->add("name", ProductType::class)
-                    //  ->getForm();                     
+                    //  ->getForm();
 
         $form = $this->createForm(ProductType::class, $product);
         return $this->render('product/edit.html.twig',['form' => $form->createView()]);
-                                
+
 
     }
 }
