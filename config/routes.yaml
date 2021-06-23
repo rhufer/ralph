@@ -1,0 +1,23 @@
+list:
+    path: /{page}
+    controller: App\Controller\ProductController::list
+    requirements:
+        page: '\d+'
+    defaults:
+      page: 1
+
+add_cart_product:
+    path: /addProduct/{id}
+    controller: App\Controller\CartController::add
+
+show:
+    path: /product/{id}
+    controller: App\Controller\ProductController::show
+    requirements:
+        slug: '[\S]+'
+
+edit:
+    path: /edit/{id}
+    controller: App\Controller\ProductController::edit
+
+
