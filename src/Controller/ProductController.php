@@ -55,10 +55,11 @@ class ProductController extends AbstractController
         //return $this->render();
     }
 
+    //public function edit(Request $request, Product $product){
 
-    public function edit(Request $request){
+    public function edit(Request $request, $id){
 
-       $product = $this->getDoctrine()->getRepository(Product::class)->find(92);
+       $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
 
        //$product = $this->getDoctrine()->getRepository(Product::class)->findOneBy(array('id' => $id));
         $this->denyAccessUnlessGranted('ROLE_MANAGER');
@@ -74,8 +75,25 @@ class ProductController extends AbstractController
                     //  ->getForm();                     
 
         $form = $this->createForm(ProductType::class, $product);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $product = $form->getData();
+
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($product);
+            $entityManager->flush();
+            die($product->getName());
+            return $this->redirectToRoute('task_success');
+        }
+
         return $this->render('product/edit.html.twig',['form' => $form->createView()]);
                                 
+
 
     }
 }

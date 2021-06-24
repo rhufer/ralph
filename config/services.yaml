@@ -28,3 +28,12 @@ services:
     mailer.mailer:
         class: App\Service\NewMailer
 
+    App\EventListener\PrePersist:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    App\EventListener\PreUpdate:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+
+
