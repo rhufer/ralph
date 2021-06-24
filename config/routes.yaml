@@ -28,4 +28,10 @@ editCategory:
     path: /edit/category/{id}
     controller: App\Controller\CartController::editCat
 
+product_show:
+    path: /show/{id}
+    controller: App\Controller\ProductController::showCustom
+    requirements:
+        id: '[\S]+'
+
 

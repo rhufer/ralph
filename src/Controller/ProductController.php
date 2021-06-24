@@ -123,5 +123,20 @@ class ProductController extends AbstractController
  
          return $this->render('product/create.html.twig',['form' => $form->createView()]);
  
+
+     }
+
+     /*
+     * @Param
+     * @ParamConverter("product", converter="ProductConverter")
+     */
+     public function showCustom(Request $request, Product $product){
+
+        return $this->render('product/show.html.twig',
+        [
+            'product' => $product,
+            'tva' => $this->calculator->calculTva($product->getPrice())
+        ]);
+
      }
 }

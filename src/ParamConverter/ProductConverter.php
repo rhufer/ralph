@@ -11,14 +11,17 @@ class ProductConverter implements ParamConverterInterface{
 
     private $productRepository;
 
-    public function __construct(ProductRepository $productRepositoryt)
+    public function __construct(ProductRepository $productRepository)
     {
-        //$this->logger = $logger;
+        $this->productRepository = $productRepository;
     }
 
-    public function apply(Request $request, ParamConverter $configurtion)
+    public function apply(Request $request, ParamConverter $configuration)
     {
-        //$product = $this->productRepository->find
+
+        $product = $this->productRepository->findOneBy(['slug' => $request->get('slug')]);
+        die($product);
+        $request->attributes->set($configuration->getName(),$product);
     }
 
     public function supports(ParamConverter $configuration)
