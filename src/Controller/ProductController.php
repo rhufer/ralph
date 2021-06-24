@@ -90,8 +90,8 @@ class ProductController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
-            die($product->getName());
-            return $this->redirectToRoute('task_success');
+            //die($product->getName());
+            //return $this->redirectToRoute('task_success');
         }
 
         return $this->render('product/edit.html.twig',['form' => $form->createView()]);
