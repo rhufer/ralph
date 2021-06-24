@@ -5,13 +5,17 @@ namespace App\Validator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
+use App\Validator\ProductName;
 
-
-class ProductValidator extends ConstraintValidator
+class ProductNameValidator extends ConstraintValidator
 {
     public function validate($value, Constraint $constraint){
-        if (!$constraint instanceof AddCaractere){
-            throw new UnexpectedTypeException($constraint, AddCaractere::class);
+
+        $this->context->buildViolation($constraint->message)
+        ->setParameter('{{ string }}', $value)
+        ->addViolation();
+        if (!$constraint instanceof ProductName){
+            throw new UnexpectedTypeException($constraint, ProductName::class);
         }
 
         die('je suis dans le validateur');

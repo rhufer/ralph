@@ -36,4 +36,8 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
 
+    App\ParamConverter\ProductConverter:
+        tags:
+            - { name: 'request.param_converter', converter: Producteur }
+
 

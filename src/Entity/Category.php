@@ -6,7 +6,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Validator as CustomAssert;
+use App\Validator as CustomValidator;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
@@ -22,7 +22,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @CustomAssert\ProductValidator
+     * @CustomValidator\ProductName
      *  
      */
     private $name;
