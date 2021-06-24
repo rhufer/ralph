@@ -20,9 +20,13 @@
 <div>
 {% for product in products %}
     <div>
-    {{ product.name }} vers <a href="{{ path('show', {'id':product.id}) }}">{{ product.name }}</a> edition <a href="{{ path('edit', {'id':product.id}) }}">{{ product.name }}</a>
+    {{ product.name }} vers <a href="{{ path('show', {'id':product.id}) }}">{{ product.name }}</a> edition <a href="{{ path('edit', {'id':product.id}) }}">{{ product.name }}</a> category: <a href="{{ path('editCategory', {'id':product.category.id}) }}">{{ product.category.name }}</a>
     </div>
 {% endfor %}
+
+</div>
+<div>
+<a href="{{ path('create') }}">Création</a>
 </div>
 <div>
     <button></button>

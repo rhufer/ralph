@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cart;
-use App\Entity\Product;
+use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,6 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use App\Form\CategoryType;
 
 class CartController extends AbstractController
 {
@@ -46,20 +47,44 @@ class CartController extends AbstractController
         ]);
 
         $encoder = new JsonEncoder();
-        // $defaultContext = [
-        //     AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER = > function ($objct, $format, $connect){
-        //         return $object->getId();
-        //     }
-        // ]
+        $defaultContext = [
+             AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($objct, $format, $connect){
+                 return $object->getId();
+             }
+            ];
 
         $normalizer = new ObjectNormalizer();
         $serializer = new Serializer([$normalizer], [$encoder]);
 
         $jsonContent = $serializer->serialize($cart, 'json');
 
-//        return new
-    
     }
+
+
+    public function editCat(Request $request, Category $category){
+
+         $this->denyAccessUnlessGranted('ROLE_MANAGER');
+ 
+         $form = $this->createForm(CategoryType::class, $category);
+ 
+         $form->handleRequest($request);
+         if ($form->isSubmitted() && $form->isValid()) {
+             // $form->getData() holds the submitted values
+             // but, the original `$task` variable has also been updated
+             $category = $form->getData();
+ 
+             // ... perform some action, such as saving the task to the database
+             // for example, if Task is a Doctrine entity, save it!
+             $entityManager = $this->getDoctrine()->getManager();
+             $entityManager->persist($category);
+             $entityManager->flush();
+         }
+ 
+         return $this->render('product/edit.html.twig',['form' => $form->createView()]);
+ 
+ 
+ 
+     }
 
 }
 

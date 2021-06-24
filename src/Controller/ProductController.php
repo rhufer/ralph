@@ -99,4 +99,29 @@ class ProductController extends AbstractController
 
 
     }
+
+
+    public function create(Request $request){
+
+         $this->denyAccessUnlessGranted('ROLE_MANAGER');
+ 
+ 
+         $form = $this->createForm(ProductType::class);
+ 
+         $form->handleRequest($request);
+         if ($form->isSubmitted() && $form->isValid()) {
+             $product = $form->getData();
+ 
+             // ... perform some action, such as saving the task to the database
+             // for example, if Task is a Doctrine entity, save it!
+             $entityManager = $this->getDoctrine()->getManager();
+             $entityManager->persist($product);
+             $entityManager->flush();
+             //die($product->getName());
+             return $this->redirectToRoute('list');
+         }
+ 
+         return $this->render('product/create.html.twig',['form' => $form->createView()]);
+ 
+     }
 }

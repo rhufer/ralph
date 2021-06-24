@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @UniqueEntity("name",message="Ce nom est déjà utilisé")
  */
 class Product
 {
@@ -18,19 +21,21 @@ class Product
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\NotBlank(message="faux")
+     */
+    private $name;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Type(message="indiquez un prix",type="float")
      */
     private $price;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="Products")
@@ -83,7 +88,7 @@ class Product
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName($name): self
     {
         $this->name = $name;
 
