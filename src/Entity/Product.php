@@ -6,10 +6,13 @@ use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @UniqueEntity("name",message="Ce nom est déjà utilisé")
+ * @ApiResource(normalizationContext={"groups"={"product"}})
  */
 class Product
 {
@@ -23,6 +26,7 @@ class Product
     /**
      * @ORM\Column(type="string", length=255, nullable=false)
      * @Assert\NotBlank(message="faux")
+     * @Groups({"category"})
      */
     private $name;
 
@@ -40,6 +44,7 @@ class Product
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="Products")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"product"})
      */
     private $category;
 

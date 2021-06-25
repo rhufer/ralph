@@ -7,9 +7,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator as CustomValidator;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation as Serializer;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
+ * @ApiResource(normalizationContext={"groups"={"category"}})
  */
 class Category
 {
@@ -23,12 +27,14 @@ class Category
     /**
      * @ORM\Column(type="string", length=255)
      * @CustomValidator\ProductName
-     *  
+     * @Groups({"product"})
+     * 
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="category")
+     * @Groups({"category"})
      */
     private $Products;
 
@@ -39,6 +45,7 @@ class Category
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"product"})
      */
     private $enabled;
 

@@ -127,7 +127,8 @@ class ProductController extends AbstractController
      }
 
      /*
-     * @Param
+     * @param Request $request
+     * @param
      * @ParamConverter("product", converter="ProductConverter")
      */
      public function showCustom(Request $request, Product $product){

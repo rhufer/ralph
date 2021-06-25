@@ -27,7 +27,7 @@ class PreUpdate
             $this->logger->error('on est dans le PreUpdate');
             //die('on est dans le PreUpdate');
 
-            
+            $entityManager = $args->getObjectManager();            
 
         }
         

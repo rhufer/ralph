@@ -15,7 +15,7 @@ class PrePersist
     {
         $this->logger = $logger;
     }
-    
+
     public function prePersist(LifecycleEventArgs $args){
         $entity = $args->getObject();
 
@@ -26,6 +26,7 @@ class PrePersist
             $this->logger->alert('on est dans le PrePersist');
             $this->logger->error('on est dans le PrePersist');
             //die('on est dans le PrePersist');
+            $entityManager = $args->getObjectManager();
 
         }
 

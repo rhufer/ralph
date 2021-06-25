@@ -29,9 +29,11 @@ editCategory:
     controller: App\Controller\CartController::editCat
 
 product_show:
-    path: /show/{id}
+    path: /show/{slug}
     controller: App\Controller\ProductController::showCustom
     requirements:
-        id: '[\S]+'
+        slug: '[\S]+'
 
+api_login_check:
+    path: /api/login_check
 

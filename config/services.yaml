@@ -40,4 +40,15 @@ services:
         tags:
             - { name: 'request.param_converter', converter: Producteur }
 
+#    App\EventListener\ExceptionLoginListener:
+#        tags:
+#            - { name: 'kernel.event_listener', event: 'Symfony\Component\Security\Http\Event\LoginFailureEvent'}
+
+    App\EventListener\LoginSubscriber:
+        tags:
+            - { name: 'kernel.event_subscriber', event: 'Symfony\Component\Security\Http\Event\LoginFailureEvent'}
+
+    #product.discount:
+    #    class: App\Command\ProductDiscountCommand
+
 
